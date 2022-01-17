@@ -320,6 +320,7 @@ func TestParsing(t *testing.T) {
 	parseAndCompare(t, "export\tOPTION_A=2", "OPTION_A", "2")
 	parseAndCompare(t, "  export OPTION_A=2", "OPTION_A", "2")
 	parseAndCompare(t, "\texport OPTION_A=2", "OPTION_A", "2")
+	// PATH add
 
 	// it 'expands newlines in quoted strings' do
 	// expect(env('FOO="bar\nbaz"')).to eql('FOO' => "bar\nbaz")
