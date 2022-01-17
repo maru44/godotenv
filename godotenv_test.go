@@ -320,7 +320,6 @@ func TestParsing(t *testing.T) {
 	parseAndCompare(t, "export\tOPTION_A=2", "OPTION_A", "2")
 	parseAndCompare(t, "  export OPTION_A=2", "OPTION_A", "2")
 	parseAndCompare(t, "\texport OPTION_A=2", "OPTION_A", "2")
-	// PATH add
 
 	// it 'expands newlines in quoted strings' do
 	// expect(env('FOO="bar\nbaz"')).to eql('FOO' => "bar\nbaz")
@@ -382,6 +381,13 @@ func TestLinesToIgnore(t *testing.T) {
 	// expect(env("\n \t  \nfoo=bar\n \nfizz=buzz")).to eql('foo' => 'bar', 'fizz' => 'buzz')
 	if !isIgnoredLine("\n") {
 		t.Error("Line with nothing but line break wasn't ignored")
+	}
+
+	for _, s := range direnvSpecialPrefixes {
+		str := s + "aaadkajjewjiewjae2444"
+		if !isIgnoredLine(str) {
+			t.Errorf("Has prefix '%s' wasn't ignored", s)
+		}
 	}
 
 	if !isIgnoredLine("\r\n") {

@@ -254,12 +254,6 @@ func parseLine(line string, envMap map[string]string) (key string, value string,
 		line = strings.Join(segmentsToKeep, "#")
 	}
 
-	// if has special prefixes
-	for _, pre := range direnvSpecialPrefixes {
-		if strings.HasPrefix(line, pre) {
-			return
-		}
-	}
 	firstEquals := strings.Index(line, "=")
 	firstColon := strings.Index(line, ":")
 	splitString := strings.SplitN(line, "=", 2)
@@ -355,6 +349,12 @@ func expandVariables(v string, m map[string]string) string {
 }
 
 func isIgnoredLine(line string) bool {
+	// if has special prefixes
+	for _, pre := range direnvSpecialPrefixes {
+		if strings.HasPrefix(line, pre) {
+			return true
+		}
+	}
 	trimmedLine := strings.TrimSpace(line)
 	return len(trimmedLine) == 0 || strings.HasPrefix(trimmedLine, "#")
 }
