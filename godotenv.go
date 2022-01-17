@@ -29,7 +29,7 @@ import (
 const doubleQuoteSpecialChars = "\\\n\r\"!$`"
 
 var direnvSpecialPrefixes = []string{
-	"PATH_add", "path_add", "find_up", "expand_path", "echo",
+	"PATH_add ", "path_add ", "find_up ", "expand_path ", "echo ",
 }
 
 // Load will read your env file(s) and load them into ENV for this process.
@@ -254,6 +254,12 @@ func parseLine(line string, envMap map[string]string) (key string, value string,
 		line = strings.Join(segmentsToKeep, "#")
 	}
 
+	// if has special prefixes
+	for _, pre := range direnvSpecialPrefixes {
+		if strings.HasPrefix(line, pre) {
+			return
+		}
+	}
 	firstEquals := strings.Index(line, "=")
 	firstColon := strings.Index(line, ":")
 	splitString := strings.SplitN(line, "=", 2)
@@ -269,12 +275,6 @@ func parseLine(line string, envMap map[string]string) (key string, value string,
 
 	// Parse the key
 	key = splitString[0]
-	// if has special prefixes
-	for _, pre := range direnvSpecialPrefixes {
-		if strings.HasPrefix(key, pre) {
-			return
-		}
-	}
 	if strings.HasPrefix(key, "export") {
 		key = strings.TrimPrefix(key, "export")
 	}
