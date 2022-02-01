@@ -29,7 +29,7 @@ import (
 const doubleQuoteSpecialChars = "\\\n\r\"!$`"
 
 var direnvSpecialPrefixes = []string{
-	"PATH_add ", "path_add ", "find_up ", "expand_path ", "echo ", "dotenv ",
+	"PATH_add ", "path_add ", "find_up ", "expand_path ", "echo ", "dotenv",
 }
 
 // Load will read your env file(s) and load them into ENV for this process.
